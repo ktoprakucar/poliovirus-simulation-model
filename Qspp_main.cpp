@@ -251,6 +251,8 @@ int main(int argc, char* argv[])
 	cout << "Mahoney synergy factor is " << dMAHONEY_SYNERGY << endl;
     cout << "Retain lethals is " << (bRETAIN_LETHALS ? "true" : "false") << endl;
 	cout << "Filter defectives is " << (bFILTER_DEFECTIVES ? "true" : "false") << endl;
+    cout << "number of sabin 1 positions " << NUM_SABIN1_POSITIONS << endl;
+
 
 	cout << endl << "Creating initial genotypes..." << endl;
 
@@ -266,9 +268,9 @@ int main(int argc, char* argv[])
 	pSabin         = new CGenotype(Sabin1Positions, NUM_SABIN1_POSITIONS);
 
 	// Creating Fitness based on Mahoney and Neurovirulence
-	pFitness = new CFitness(Fitness1Positions, NUM_FITNESS1_POSITIONS); // no lethal mutations possible
+	//pFitness = new CFitness(Fitness1Positions, NUM_FITNESS1_POSITIONS); // no lethal mutations possible
 	//pFitness = new CFitness(Fitness2Positions, NUM_FITNESS2_POSITIONS); // 27 lethal mutations possible
-	//pFitness = new CFitness(Fitness3Positions, NUM_FITNESS3_POSITIONS); // 4 lethal mutations possible
+	pFitness = new CFitness(Fitness3Positions, NUM_FITNESS3_POSITIONS); // 4 lethal mutations possible
 
 	// Print starting data for this simulation
 	cout << endl << "These are the standard genotypes: ";
