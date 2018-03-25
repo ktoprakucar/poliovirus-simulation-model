@@ -7,7 +7,7 @@
 // Copyright   : Copyright (C) 2015 Carol L. Ecale Zhou - All Rights Reserved.
 // License     : See LICENSE.md for license information
 //
-// Description : 
+// Description :
 //    Qspp is an agent-based stochastic simulation model. Being a simplified
 //    version of an original model plan, it contains only 3 agents:  genotypes,
 //    populations, and the quasispecies cloud. This model could be expanded to a
@@ -28,7 +28,7 @@
 //    strains, and the only cellular components are the genotypes. Various parameters
 //    are controlled by the programmer (e.g., burst size, inoculum size, number of
 //    generations). Genetic variability is achieved by random nucleotide mutation and
-//    copy-choice replication. Indels are not modeled.  
+//    copy-choice replication. Indels are not modeled.
 //       Version 1 of this model is designed to simulate the transition from Sabin
 //    to Mahoney. Thus, the Sabin genotype comprises the initial inoculum.
 //    Nucleotide positions that match neurovirulence (from the literature)
@@ -40,7 +40,7 @@
 //    potential impact of changes in the frequencies of these known genetic
 //    mechanisms.
 //
-// Programmer's notes: 
+// Programmer's notes:
 //  1) see Reuer 1990 JVirol for real lethal muts
 //  2) see Gregori 2014 Bioinformatics for Qspp diversity
 //============================================================================
@@ -50,12 +50,12 @@
 #include <string.h>
 #include <typeinfo>
 #include "FixedState.h"
-#include "Configurable.h"  
+#include "Configurable.h"
 #include "Cloud.h"
 
 #define QSPP_TESTING
 
-using namespace std; // 
+using namespace std; //
 
 // General
 #define TRUE 1
@@ -64,7 +64,7 @@ using namespace std; //
 // Global
 bool          bREMOVE_LETHALS = FALSE;
 
-// Initialize according to defaults listed in Configurable.h 
+// Initialize according to defaults listed in Configurable.h
 // And modifiable by user at command line
 double        dERROR_RATE                    = ERROR_RATE;
 double        dGENERATIONAL_GROWTH           = GENERATIONAL_GROWTH;
@@ -79,7 +79,7 @@ int           iMAHONEY_THRESHOLD             = MAHONEY_THRESHOLD;
 bool          bRETAIN_LETHALS                = RETAIN_LETHALS;
 double        dMAHONEY_SYNERGY               = MAHONEY_SYNERGY;
 int           iPURGE_PERCENT                 = PURGE_PERCENT; // CHECK: not sure this is useful
-bool          bFILTER_DEFECTIVES             = FILTER_DEFECTIVES; 
+bool          bFILTER_DEFECTIVES             = FILTER_DEFECTIVES;
 
 // Not yet in service
 unsigned long iGENERATION_DEPTH              = GENERATION_DEPTH;
@@ -104,7 +104,7 @@ unsigned long iNEUROVIRULENT_COUNT = NEUROVIRULENT_COUNT; // Standard
 
 // These variables control composition of initial inoculum
 unsigned long iSABIN_COUNT         = SABIN_COUNT;         // For inoculum
-unsigned long iFOOBAR1_COUNT       = FOOBAR1_COUNT;       // For inoculum 
+unsigned long iFOOBAR1_COUNT       = FOOBAR1_COUNT;       // For inoculum
 unsigned long iFOOBAR2_COUNT       = FOOBAR2_COUNT;       // For inoculum
 unsigned long iFOOBAR3_COUNT       = FOOBAR3_COUNT;       // For inoculum
 
@@ -137,14 +137,14 @@ void Simulate(void)
 
 		// Add starting genotype to inoculum
 		CGenotype * pNextStart = new CGenotype(pSabin,1);
-		pInoculum->AddGenotype(pNextStart);  	
-	
-		// Each population (cell model) receives this inoculum	
+		pInoculum->AddGenotype(pNextStart);
+
+		// Each population (cell model) receives this inoculum
 		pCurCloud->AddPopulation(pInoculum); // Add inoculum (population object) to cloud
-	}	
-	
-	// Passage iNUMBER_OF_PASSAGES times (ie, that many cycles plus 1) 
-	// Passage 0 is the initial plate 
+	}
+
+	// Passage iNUMBER_OF_PASSAGES times (ie, that many cycles plus 1)
+	// Passage 0 is the initial plate
 	for(unsigned int i = 0; i <= iNUMBER_OF_PASSAGES; i++)
 	{
 		bool bExtinct = false; // Cloud goes extinct (virus non-viable) if all pops crash
@@ -155,7 +155,7 @@ void Simulate(void)
 			// and create new cloud from new inoculum
 			pPrevCloud = pCurCloud;
 			pCurCloud = new CCloud;
-			
+
 			for(unsigned int j = 0; j < iNUMBER_OF_POPULATIONS; j++)
 			{
 				pInoculum = pPrevCloud->PickInoculum(iMULTIPLICITY_OF_INFECTION);
@@ -191,7 +191,7 @@ void Simulate(void)
 		cout << endl << "Conclusion of Passage " << i << " Data" << endl;
 	}
 	delete pCurCloud;
-	
+
 	cout << endl << "Simulation complete." << endl;
 }
 
@@ -221,11 +221,11 @@ int main(int argc, char* argv[])
 			iNUMBER_OF_POPULATIONS = ((unsigned)atol(argv[i+1]));
 		else if(!strcmp(argv[i],"-a"))
 			dFITNESS_ACCELERATOR = ((double)atof(argv[i+1]));
-        	else if(!strcmp(argv[i],"-t"))
-        	        iMAHONEY_THRESHOLD = ((int)atoi(argv[i+1]));
-        	else if(!strcmp(argv[i],"-s"))
-        	        dMAHONEY_SYNERGY = ((double)atof(argv[i+1]));
-        	else if(!strcmp(argv[i],"-l"))
+        else if(!strcmp(argv[i],"-t"))
+            iMAHONEY_THRESHOLD = ((int)atoi(argv[i+1]));
+        else if(!strcmp(argv[i],"-s"))
+            dMAHONEY_SYNERGY = ((double)atof(argv[i+1]));
+        else if(!strcmp(argv[i],"-l"))
 		{
 			if(!strcmp(argv[i+1],"n") || !strcmp(argv[i+1],"no") || !strcmp(argv[i+1],"false") || !strcmp(argv[i+1],0))
 				bRETAIN_LETHALS = false; // Default is true
@@ -246,30 +246,30 @@ int main(int argc, char* argv[])
 	cout << "Number of passages = " << iNUMBER_OF_PASSAGES << endl;
 	cout << "Number of generations to consolidate = " << iNUM_GENS_TO_CONSOLIDATE << endl;
 	cout << "Number of populations = " << iNUMBER_OF_POPULATIONS << endl;
-    	cout << "Fitness accelerator = " << dFITNESS_ACCELERATOR << endl;
-    	cout << "Mahoney threshold (%) = " << iMAHONEY_THRESHOLD << endl;
+    cout << "Fitness accelerator = " << dFITNESS_ACCELERATOR << endl;
+    cout << "Mahoney threshold (%) = " << iMAHONEY_THRESHOLD << endl;
 	cout << "Mahoney synergy factor is " << dMAHONEY_SYNERGY << endl;
-    	cout << "Retain lethals is " << (bRETAIN_LETHALS ? "true" : "false") << endl;
+    cout << "Retain lethals is " << (bRETAIN_LETHALS ? "true" : "false") << endl;
 	cout << "Filter defectives is " << (bFILTER_DEFECTIVES ? "true" : "false") << endl;
 
 	cout << endl << "Creating initial genotypes..." << endl;
-	
+
 	// All of the following genotypes and fitness grids are configurable within FixedState.h
 	// These must be created in order to drive a simulation
-	
+
 	// Sabin1, Mahoney, and Neurovirulent are based on literature
 	pSabin1        = new CGenotype(Sabin1Positions, NUM_SABIN1_POSITIONS);
 	pMahoney       = new CGenotype(MahoneyPositions, NUM_MAHONEY_POSITIONS);
 	pNeurovirulent = new CGenotype(NeurovirulentPositions, NUM_NEUROVIRULENT_POSITIONS);
-	
+
 	// These are starting genotypes for running a simulation
 	pSabin         = new CGenotype(Sabin1Positions, NUM_SABIN1_POSITIONS);
-    
+
 	// Creating Fitness based on Mahoney and Neurovirulence
 	pFitness = new CFitness(Fitness1Positions, NUM_FITNESS1_POSITIONS); // no lethal mutations possible
 	//pFitness = new CFitness(Fitness2Positions, NUM_FITNESS2_POSITIONS); // 27 lethal mutations possible
 	//pFitness = new CFitness(Fitness3Positions, NUM_FITNESS3_POSITIONS); // 4 lethal mutations possible
-	
+
 	// Print starting data for this simulation
 	cout << endl << "These are the standard genotypes: ";
 	cout << endl << "Mahoney:       ";
@@ -291,8 +291,8 @@ int main(int argc, char* argv[])
 	delete pSabin1;
 	delete pMahoney;
 	delete pNeurovirulent;
-	delete pSabin;  
+	delete pSabin;
 	delete pFitness;
-	
+
 	return 0;
 }
