@@ -33,7 +33,10 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Cloud.cpp" />
+		<Unit filename="Configurable.h" />
 		<Unit filename="Fitness.cpp" />
+		<Unit filename="Fitness.h" />
+		<Unit filename="FixedState.h" />
 		<Unit filename="Genotype.cpp" />
 		<Unit filename="Population.cpp" />
 		<Unit filename="Population.h" />
